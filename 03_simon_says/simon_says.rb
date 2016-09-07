@@ -8,7 +8,6 @@ def shout(arg)
 end
 
 def repeat(arg, num = 2)
-	space = " "
 	output = "#{arg}"
 	if num <= 2
 		output = arg + " " + arg
@@ -31,30 +30,17 @@ def first_word(word)
 end
 
 def titleize(word)
-	# little_word = ["and", "to", "over", "at", "in", "the"]
 	array = word.split(" ")
 	array = array.map! {|x| x.capitalize}
+
+	for i in 1..array.length-1 do
+		if (array[i] == "The") || (array[i] == "And") || (array[i] == "Or") || (array[i] == "The") || (array[i] == "In") || (array[i] == "Over") || (array[i] == "At") || (array[i] == "To")
+ 			array[i].downcase!
+		end	
+	end		
+
 	output = array.join(" ")
 	return output
-end	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+end
 
 

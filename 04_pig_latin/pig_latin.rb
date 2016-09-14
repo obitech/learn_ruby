@@ -1,27 +1,25 @@
-def one_word(s)
-	if s[0] =~ /[aeiou]/
-		s << "ay"
+def translate(str)
+	letters = ("a".."z").to_a
+	vowels = %w[a e i o u]
+	consonants = letters - vowels
 
-	elsif s[0..1] !~ /[aeiou]/
-		s << s[0..1] + "ay"
-		s.slice!(2..s.length-1)
+	str.gsub(/\w+/) do |word|
+		idx = word.index(/[aeiou]/)
+		qu_idx = word.index(/qu/)
 
-	elsif s[0] !~ /[aeiou]/
-		s << s[0] + "ay"
-		s.slice(1..s.length-1)
+		if vowels.include?(word.downcase[0])
+			word + "ay"
+
+		elsif word[0..1] == "qu"
+			word[2, word.length-1] + "quay"
+
+		elsif word[1..2] == "qu"
+			word[3, word.length-1] + word[0] + "quay"	
+			
+		else
+			word[idx, word.length-idx] + word[0, idx] + "ay"
+			
+		end	
+	end
 	
-	end	
-end
-
-def two_word(s)
-	array = []
-
-end
-
-def translate(s)
-	if s !~ /[[:blank:]]/
-		one_word(s)
-	else
-		two_word(s)
-	end	
 end

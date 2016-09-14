@@ -1,3 +1,7 @@
 class Timer
-  #write your code here
+  def seconds
+  	@seconds = 0 
+  end
+
+
 end

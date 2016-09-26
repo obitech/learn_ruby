@@ -1,54 +1,108 @@
 class Timer
-  def seconds
-  	@seconds = 0 
+
+  def initialize
+  	@seconds = 0
   end
 
-
-end
-
-def timer(input) # enter seconds
+  def time_string=(input)
+  	input = @seconds
 	# creating dummy time slots
 	h = "00"
 	m = "00"
 	s = "00"
 
-	if (0..59) === input
-		if (0...10) === input
-			s = input.to_s
+	## Under 1 minute entered? Fill into seconds time slot
+	if (0..59) === @seconds
+		if (0...10) === @seconds
+			s = @seconds.to_s
 			s.prepend("0")
 
 		else
-			s = input.to_s
+			s = @seconds.to_s
+		end
+	## Between 1 minute and 59min59s? 
+	elsif (60..3599) === @seconds
+		## Fill minute time slot
+		m = (@seconds / 60).to_s
+		if m.length == 1
+			m.prepend("0")
+		end	
+		## put rest into second time slot
+		s = (@seconds % 60).to_s
+		if s.length == 1
+			s.prepend("0")		
+		end
+	
+	## Between 1 hour and 99h59min59s?	
+	elsif (3600..359999) === @seconds
+		## Fill hour slot
+		h = (@seconds / 3600).to_s
+		if h.length == 1
+			h.prepend("0")
+		end
+		## Fill minutes slot
+		m = ((@seconds % 3600) / 60).to_s
+		if m.length == 1
+			m.prepend("0")
+		end
+		## Fill seconds slot
+		s = ((@seconds % 3600) % 60).to_s	
+		if s.length == 1
+			s.prepend("0")
+		end
+	
+	else
+		puts "Please enter a value between 0 and 356400 seconds"
 
+	end
+
+	puts "#{h}" + ":" + "#{m}" + ":" + "#{s}"
+  end	
+
+end
+
+=begin
+def timer(@seconds) # enter seconds
+	# creating dummy time slots
+	h = "00"
+	m = "00"
+	s = "00"
+
+	if (0..59) === @seconds
+		if (0...10) === @seconds
+			s = @seconds.to_s
+			s.prepend("0")
+
+		else
+			s = @seconds.to_s
 		end
 
-	elsif (60..3599) === input
-		m = (input / 60).to_s
+	elsif (60..3599) === @seconds
+		m = (@seconds / 60).to_s
 		if m.length == 1
 			m.prepend("0")
 		end	
 
-		s = (input % 60).to_s
+		s = (@seconds % 60).to_s
 		if s.length == 1
 			s.prepend("0")		
 		end
 		
-	elsif (3600..356518)
-		h = (input/3600).to_s
+	elsif (3600..359999) === @seconds
+		h = (@seconds / 3600).to_s
 		if h.length == 1
 			h.prepend("0")
 		end
-=begin  CHANGE THIS PART !!
-		m = ((input - 3600) % 60).to_s
+		m = ((@seconds % 3600) / 60).to_s
 		if m.length == 1
 			m.prepend("0")
 		end
 		
-		s = ((input / 60) % 60).to_s	
+		s = ((@seconds % 3600) % 60).to_s	
 		if s.length == 1
 			s.prepend("0")
 		end
-=end		
+	
 	else
 		puts "Please enter a value between 0 and 356400 seconds"
 
@@ -58,6 +112,8 @@ def timer(input) # enter seconds
 
 end
 
+
+puts "#{timer(3247)}"
 puts "#{timer(3598)}"
 puts "#{timer(3599)}"
 puts "#{timer(3600)}"
@@ -68,5 +124,6 @@ puts "#{timer(7263)}"
 puts "#{timer(8000)}"
 puts "#{timer(356517)}"
 puts "#{timer(300000)}"
-
+puts "#{timer(359999)}"
+=end
 
